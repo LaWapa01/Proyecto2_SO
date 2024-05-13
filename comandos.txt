@@ -1,0 +1,9 @@
+gcc star.c -o star
+
+./star -cvf Pruebas/cprueba.tar Pruebas/a.txt Pruebas/b.txt Pruebas/michi.jpg
+
+./star -tvf Pruebas/cprueba.tar
+
+./star --delete Pruebas/cprueba.tar Pruebas/b.txt
+
+./star -xvf Pruebas/cprueba.tar Pruebas/a.txt
