@@ -14,9 +14,11 @@ typedef struct FileHeader
     bool deleted;
 } f_h;
 
+
 const int HEADER_SIZE = sizeof(f_h);
 
 // Función para crear un archivo tar
+//Entradas: Nombre de archivo tar, nùmero de archivo a integrar, lista de archivos
 void create_tar(const char *outputFile, int numFiles, char *inputFiles[])
 {
     printf("Nombre del archivo de salida: %s\n", outputFile);
@@ -73,6 +75,8 @@ void create_tar(const char *outputFile, int numFiles, char *inputFiles[])
     printf("Se creó el archivo star: %s\n", outputFile);
 }
 
+//Función para extraer un archivo del archivo tar
+//ENtradas: Nombre del archivo tar, número de archivos a extraer, lista de nombres de archivos a extrae
 void extract_tar(const char *archiveFile, int numFiles, char *filesToExtract[]) {
     FILE *tarFile = fopen(archiveFile, "rb");
     if (!tarFile) {
@@ -112,6 +116,7 @@ void extract_tar(const char *archiveFile, int numFiles, char *filesToExtract[]) 
         }
     } else {
         // Se especificaron archivos específicos para extraer.
+        //
         for (int i = 0; i < numFiles; i++) {
             struct FileHeader header;
             bool found = false;
@@ -158,6 +163,8 @@ void extract_tar(const char *archiveFile, int numFiles, char *filesToExtract[]) 
     fclose(tarFile);
 }
 
+//Funciòn para listar los elementos dentro de un archivo tar
+//Entradas: NOmbre del archivo tar
 void list_tar(const char *archiveFile) {
     FILE *tarFile = fopen(archiveFile, "rb");
     if (!tarFile) {
@@ -166,6 +173,7 @@ void list_tar(const char *archiveFile) {
     }
 
     struct FileHeader header;
+    //Se recorren los archivos dentro del archcivo tar
     while (fread(&header, sizeof(struct FileHeader), 1, tarFile) == 1) {
         if (!header.deleted) {
             printf("Nombre: %s, Tamaño: %u bytes\n", header.name, header.size);
@@ -178,6 +186,8 @@ void list_tar(const char *archiveFile) {
     fclose(tarFile);
 }
 
+//Función para eliminar archivos dentro de un archivo tar
+//Entradas: Nombre del archivo tar, número de archivos al azar, lista de archivos a eliminar
 void delete_from_tar(const char *archiveFile, int numFiles, char *filesToDelete[]) {
     printf("Archivo TAR: %s\n", archiveFile);
     printf("Archivos a borrar:\n");
